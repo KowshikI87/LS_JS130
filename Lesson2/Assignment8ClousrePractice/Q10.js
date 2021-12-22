@@ -2,8 +2,8 @@
 
 function bind(context, func) {
   return function() {
-    func.call(context)
-  }
+    func.call(context);
+  };
 }
 
 let obj = {};
