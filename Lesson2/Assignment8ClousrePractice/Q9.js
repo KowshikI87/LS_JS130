@@ -1,7 +1,7 @@
 function later2(func, arg1) {
   return function(arg2) {
-    func(arg1, arg2)
-  }
+    func(arg1, arg2);
+  };
 }
 
 const notify = function(message, when) {
