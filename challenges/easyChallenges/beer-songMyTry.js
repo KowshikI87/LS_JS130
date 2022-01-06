@@ -1,75 +1,55 @@
 /* eslint-disable max-lines-per-function */
-let BeerSong = require('./beer-song.js');
+/*
 
-describe("Beer Song", () => {
-  test("first verse", () => {
-    let expected = "99 bottles of beer on the wall, 99 bottles of beer.\n" +
-                   "Take one down and pass it around, 98 bottles of beer " +
-                   "on the wall.\n";
+Problem
+-
 
-    expect(BeerSong.verse(99)).toBe(expected);
-  });
+- every verse contains two "newline" character
+- each verse has this template:
+  - [number] lyrics(with two newline charater somewhere (one at the end))
+  - only one of the verse does not have a number at the begining
+    - if they specify verse 0 then we are to output that line
 
-  test("another verse", () => {
-    let expected = "3 bottles of beer on the wall, 3 bottles of beer.\n" +
-                   "Take one down and pass it around, 2 bottles of beer " +
-                   "on the wall.\n";
+- class BeerSong
+  - static method: verses(...verseNums)
+    - loop through verses. If one of the verseNums matches with a verse number,
+    output that verse
+  - instance method: lyrics() --> output whole song
 
-    expect(BeerSong.verse(3)).toBe(expected);
-  });
+Example/Test Cases
 
-  test("2 bottles verse", () => {
-    let expected = "2 bottles of beer on the wall, 2 bottles of beer.\n" +
-                   "Take one down and pass it around, 1 bottle of beer " +
-                   "on the wall.\n";
 
-    expect(BeerSong.verse(2)).toBe(expected);
-  });
+Data Structure
 
-  test("1 bottle verse", () => {
-    let expected = "1 bottle of beer on the wall, 1 bottle of beer.\n" +
-                   "Take it down and pass it around, no more bottles " +
-                   "of beer on the wall.\n";
 
-    expect(BeerSong.verse(1)).toBe(expected);
-  });
+Algorithm
 
-  test("no bottles verse", () => {
-    let expected = "No more bottles of beer on the wall, no more " +
-                   "bottles of beer.\nGo to the store and buy some " +
-                   "more, 99 bottles of beer on the wall.\n";
 
-    expect(BeerSong.verse(0)).toBe(expected);
-  });
+//Matching any line excpet the last line: /^1.+\n.+\n$/
+  //where 1 is the verse number
 
-  test("a couple of verses", () => {
-    let expected = "99 bottles of beer on the wall, 99 bottles of beer.\n" +
-                   "Take one down and pass it around, 98 bottles of beer " +
-                   "on the wall.\n\n98 bottles of beer on the wall, " +
-                   "98 bottles of beer.\nTake one down and pass it " +
-                   "around, 97 bottles of beer on the wall.\n";
+//Matching the last line: ^No.+\n.+\n$
+  - have to use the word "No" as otherwise, no way to distinguish it
+  from other lines not containing a number in the begining
 
-    expect(BeerSong.verses(99, 98)).toBe(expected);
-  });
 
-  test("a few verses", () => {
-    let expected = "2 bottles of beer on the wall, 2 bottles of beer.\n" +
-                   "Take one down and pass it around, 1 bottle of beer " +
-                   "on the wall.\n\n1 bottle of beer on the wall, 1 " +
-                   "bottle of beer.\nTake it down and pass it around, " +
-                   "no more bottles of beer on the wall.\n\n" +
-                   "No more bottles of beer on the wall, no more " +
-                   "bottles of beer.\nGo to the store and buy some " +
-                   "more, 99 bottles of beer on the wall.\n";
+Code
 
-    expect(BeerSong.verses(2, 0)).toBe(expected);
-  });
 
-  test("the whole song", () => {
-    let expected = wholeSong();
-    expect(BeerSong.lyrics()).toBe(expected);
-  });
-});
+*/
+
+let fullSong = wholeSong();
+let matchObject = fullSong.match(/^99.+\n.+\n\n/); //works with 99 only
+let matchObject2 = fullSong.match(/^98.+\n.+\n\n/m); //does not work since using 88
+let matchObject3 = fullSong.match(/98.+\n.+\n\n/); //works if I take out pattern at start of line anchor
+
+
+let verseNumber = 97;
+let regex = new RegExp("^" + verseNumber + ".+\n.+\n\n", "m");
+let matchObject4 = fullSong.match(regex);
+
+console.log("stop");
+console.log(fullSong);
 
 function wholeSong() {
   return "99 bottles of beer on the wall, 99 bottles of beer.\n" +
@@ -273,3 +253,4 @@ function wholeSong() {
     "No more bottles of beer on the wall, no more bottles of beer.\n" +
     "Go to the store and buy some more, 99 bottles of beer on the wall.\n";
 }
+

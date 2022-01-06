@@ -1,31 +1,48 @@
+//Copied from LS solution. Crucial problem was understanding the problem
 
-//original list
-let romanNumeralValsOriginal = {
-  I : 1,
-  IV: 4,
-  V : 5,
-  X : 10,
-  L : 50,
-  C : 100,
-  D : 500,
-  M : 1000,
-};
+class RomanNumeral {
+  static ROMAN_NUMERALS = {
+     M: 1000,
+    CM: 900,
+     D: 500,
+    CD: 400,
+     C: 100,
+    XC: 90,
+     L: 50,
+    XL: 40,
+     X: 10,
+    IX: 9,
+     V: 5,
+    IV: 4,
+     I: 1
+  }
 
-//new list
-let romanNumeralValsOriginal = {
-  I : 1,
-  IV: 4,
-  V : 5,
-  X : 10,
-  L : 50,
-  C : 100,
-  D : 500,
-  CM: 900,
-  M : 1000,
-};
+  constructor(number) {
+    this.number = number;
+  }
 
-/*
-M ---> CM 900; LM: 900, XM: 
+  toRoman() {
+    let romanVersion = '';
+    let toConvert = this.number;
 
+    Object.keys(RomanNumeral.ROMAN_NUMERALS).forEach(numeral => {
+      let value = RomanNumeral.ROMAN_NUMERALS[numeral];
+      let multiplier = Math.floor(toConvert / value);
+      let remainder = toConvert % value;
 
-*/
+      if (multiplier > 0) {
+        romanVersion += (numeral.repeat(multiplier));
+      }
+
+      toConvert = remainder;
+    });
+
+    return romanVersion;
+  }
+}
+
+let number = new RomanNumeral(48);
+console.log(number.toRoman());
+console.log("stop");
+
+module.exports = RomanNumeral;
